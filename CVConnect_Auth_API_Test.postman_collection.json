@@ -1,0 +1,498 @@
+{
+  "info": {
+    "_postman_id": "a1b2c3d4-e5f6-7890-abcd-ef1234567890",
+    "name": "CVConnect - Auth API Test (Phan Anh)",
+    "description": "Tool Test - Authentication & Token Validation Flow",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+  },
+  "variable": [
+    { "key": "baseUrl", "value": "http://localhost:8080/user", "type": "string" },
+    { "key": "accessToken", "value": "", "type": "string" },
+    { "key": "testEmail", "value": "sqa_2027@mailinator.com", "type": "string" },
+    { "key": "testUsername", "value": "sqapananh2027", "type": "string" },
+    { "key": "testPassword", "value": "Test@12345", "type": "string" },
+    { "key": "testFullName", "value": "SQA Test User", "type": "string" }
+  ],
+  "item": [
+    {
+      "name": "1. Register Candidate",
+      "item": [
+        {
+          "name": "TC-POST-09 Register - Valid data (Happy path + CheckDB)",
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "type": "text/javascript",
+                "exec": [
+                  "pm.test('TC-POST-09: Status is 200', function () {",
+                  "    pm.response.to.have.status(200);",
+                  "});"
+                ]
+              }
+            }
+          ],
+          "request": {
+            "method": "POST",
+            "header": [{ "key": "Content-Type", "value": "application/json" }],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n    \"username\": \"{{testUsername}}\",\n    \"password\": \"{{testPassword}}\",\n    \"fullName\": \"{{testFullName}}\",\n    \"email\": \"{{testEmail}}\"\n}"
+            },
+            "url": "{{baseUrl}}/auth/register-candidate"
+          }
+        },
+        {
+          "name": "TC-POST-10 Register - Duplicate username (Invalid path)",
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "type": "text/javascript",
+                "exec": [
+                  "pm.test('TC-POST-10: Status is not 200 for duplicate', function () {",
+                  "    pm.response.to.not.have.status(200);",
+                  "});"
+                ]
+              }
+            }
+          ],
+          "request": {
+            "method": "POST",
+            "header": [{ "key": "Content-Type", "value": "application/json" }],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n    \"username\": \"{{testUsername}}\",\n    \"password\": \"{{testPassword}}\",\n    \"fullName\": \"Duplicate Test\",\n    \"email\": \"another@test.com\"\n}"
+            },
+            "url": "{{baseUrl}}/auth/register-candidate"
+          }
+        },
+        {
+          "name": "TC-POST-11 Register - Invalid email format (Edge case)",
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "type": "text/javascript",
+                "exec": [
+                  "pm.test('TC-POST-11: Status is 400 for invalid email', function () {",
+                  "    pm.response.to.have.status(400);",
+                  "});"
+                ]
+              }
+            }
+          ],
+          "request": {
+            "method": "POST",
+            "header": [{ "key": "Content-Type", "value": "application/json" }],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n    \"username\": \"new_user_xyz\",\n    \"password\": \"Test@12345\",\n    \"fullName\": \"Test User\",\n    \"email\": \"not-an-email\"\n}"
+            },
+            "url": "{{baseUrl}}/auth/register-candidate"
+          }
+        },
+        {
+          "name": "TC-POST-12 Register - Empty fullName (Edge case)",
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "type": "text/javascript",
+                "exec": [
+                  "pm.test('TC-POST-12: Status is 400 for empty fullName', function () {",
+                  "    pm.response.to.have.status(400);",
+                  "});"
+                ]
+              }
+            }
+          ],
+          "request": {
+            "method": "POST",
+            "header": [{ "key": "Content-Type", "value": "application/json" }],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n    \"username\": \"new_user_xyz2\",\n    \"password\": \"Test@12345\",\n    \"fullName\": \"\",\n    \"email\": \"valid@test.com\"\n}"
+            },
+            "url": "{{baseUrl}}/auth/register-candidate"
+          }
+        }
+      ]
+    },
+    {
+      "name": "2. Authentication Flow",
+      "item": [
+        {
+          "name": "TC-POST-01 Login - Valid credentials (Happy path)",
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "type": "text/javascript",
+                "exec": [
+                  "pm.test('TC-POST-01: Status is 200', function () {",
+                  "    pm.response.to.have.status(200);",
+                  "});",
+                  "pm.test('TC-POST-01: Response has token', function () {",
+                  "    var body = pm.response.json();",
+                  "    pm.expect(body.data).to.have.property('token');",
+                  "    pm.collectionVariables.set('accessToken', body.data.token);",
+                  "});"
+                ]
+              }
+            }
+          ],
+          "request": {
+            "method": "POST",
+            "header": [{ "key": "Content-Type", "value": "application/json" }],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n    \"username\": \"sqapananh2026\",\n    \"password\": \"Test@12345\"\n}"
+            },
+            "url": "{{baseUrl}}/auth/login"
+          }
+        },
+        {
+          "name": "TC-POST-02 Login - Wrong password (Invalid path)",
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "type": "text/javascript",
+                "exec": [
+                  "pm.test('TC-POST-02: Status is not 200', function () {",
+                  "    pm.response.to.not.have.status(200);",
+                  "});"
+                ]
+              }
+            }
+          ],
+          "request": {
+            "method": "POST",
+            "header": [{ "key": "Content-Type", "value": "application/json" }],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n    \"username\": \"sqapananh2026\",\n    \"password\": \"WrongPassword999\"\n}"
+            },
+            "url": "{{baseUrl}}/auth/login"
+          }
+        },
+        {
+          "name": "TC-POST-03 Login - Non-existent username (Invalid path)",
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "type": "text/javascript",
+                "exec": [
+                  "pm.test('TC-POST-03: Status is not 200', function () {",
+                  "    pm.response.to.not.have.status(200);",
+                  "});"
+                ]
+              }
+            }
+          ],
+          "request": {
+            "method": "POST",
+            "header": [{ "key": "Content-Type", "value": "application/json" }],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n    \"username\": \"user_xyz_notexist\",\n    \"password\": \"Test@12345\"\n}"
+            },
+            "url": "{{baseUrl}}/auth/login"
+          }
+        },
+        {
+          "name": "TC-POST-04 Login - Empty username (Edge case)",
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "type": "text/javascript",
+                "exec": [
+                  "pm.test('TC-POST-04: Status is 400', function () {",
+                  "    pm.response.to.have.status(400);",
+                  "});"
+                ]
+              }
+            }
+          ],
+          "request": {
+            "method": "POST",
+            "header": [{ "key": "Content-Type", "value": "application/json" }],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n    \"username\": \"\",\n    \"password\": \"Test@12345\"\n}"
+            },
+            "url": "{{baseUrl}}/auth/login"
+          }
+        },
+        {
+          "name": "TC-POST-05 Login - Empty password (Edge case)",
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "type": "text/javascript",
+                "exec": [
+                  "pm.test('TC-POST-05: Status is 400', function () {",
+                  "    pm.response.to.have.status(400);",
+                  "});"
+                ]
+              }
+            }
+          ],
+          "request": {
+            "method": "POST",
+            "header": [{ "key": "Content-Type", "value": "application/json" }],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n    \"username\": \"sqapananh2026\",\n    \"password\": \"\"\n}"
+            },
+            "url": "{{baseUrl}}/auth/login"
+          }
+        },
+        {
+          "name": "TC-POST-06 Verify Token - Valid token (Happy path)",
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "type": "text/javascript",
+                "exec": [
+                  "pm.test('TC-POST-06: Status is 200', function () {",
+                  "    pm.response.to.have.status(200);",
+                  "});",
+                  "pm.test('TC-POST-06: isValid is true', function () {",
+                  "    var body = pm.response.json();",
+                  "    pm.expect(body.data.isValid).to.be.true;",
+                  "});"
+                ]
+              }
+            }
+          ],
+          "request": {
+            "method": "POST",
+            "header": [
+              { "key": "Authorization", "value": "Bearer {{accessToken}}" }
+            ],
+            "url": "{{baseUrl}}/auth/verify-token"
+          }
+        },
+        {
+          "name": "TC-POST-07 Verify Token - No token (Invalid path)",
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "type": "text/javascript",
+                "exec": [
+                  "pm.test('TC-POST-07: Status is 200', function () {",
+                  "    pm.response.to.have.status(200);",
+                  "});",
+                  "pm.test('TC-POST-07: isValid is false', function () {",
+                  "    var body = pm.response.json();",
+                  "    pm.expect(body.data.isValid).to.be.false;",
+                  "});"
+                ]
+              }
+            }
+          ],
+          "request": {
+            "method": "POST",
+            "header": [],
+            "url": "{{baseUrl}}/auth/verify-token"
+          }
+        },
+        {
+          "name": "TC-POST-08 Logout (Happy path)",
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "type": "text/javascript",
+                "exec": [
+                  "pm.test('TC-POST-08: Status is 200', function () {",
+                  "    pm.response.to.have.status(200);",
+                  "});"
+                ]
+              }
+            }
+          ],
+          "request": {
+            "method": "POST",
+            "header": [
+              { "key": "Authorization", "value": "Bearer {{accessToken}}" }
+            ],
+            "url": "{{baseUrl}}/auth/logout"
+          }
+        }
+      ]
+    },
+    {
+      "name": "3. Email Verification Token",
+      "item": [
+        {
+          "name": "TC-POST-14 Request Resend Verify Email - Valid (Happy path)",
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "type": "text/javascript",
+                "exec": [
+                  "pm.test('TC-POST-14: Status is 200', function () {",
+                  "    pm.response.to.have.status(200);",
+                  "});"
+                ]
+              }
+            }
+          ],
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": "{{baseUrl}}/auth/request-resend-verify-email?identifier={{testEmail}}"
+          }
+        },
+        {
+          "name": "TC-POST-15 Request Resend Verify Email - Non-existent (Invalid path)",
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "type": "text/javascript",
+                "exec": [
+                  "pm.test('TC-POST-15: Status is not 200', function () {",
+                  "    pm.response.to.not.have.status(200);",
+                  "});"
+                ]
+              }
+            }
+          ],
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": "{{baseUrl}}/auth/request-resend-verify-email?identifier=does_not_exist@test.com"
+          }
+        },
+        {
+          "name": "TC-POST-16 Verify Email - Invalid token (Invalid path)",
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "type": "text/javascript",
+                "exec": [
+                  "pm.test('TC-POST-16: Status is not 200 for invalid token', function () {",
+                  "    pm.response.to.not.have.status(200);",
+                  "});"
+                ]
+              }
+            }
+          ],
+          "request": {
+            "method": "PUT",
+            "header": [],
+            "url": "{{baseUrl}}/auth/verify-email/invalid-token-xyz-99999"
+          }
+        }
+      ]
+    },
+    {
+      "name": "4. Reset Password Token",
+      "item": [
+        {
+          "name": "TC-POST-17 Request Reset Password - Valid (Happy path)",
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "type": "text/javascript",
+                "exec": [
+                  "pm.test('TC-POST-17: Status is 200', function () {",
+                  "    pm.response.to.have.status(200);",
+                  "});"
+                ]
+              }
+            }
+          ],
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": "{{baseUrl}}/auth/request-reset-password?identifier=sqa_test_pananh@mailinator.com"
+          }
+        },
+        {
+          "name": "TC-POST-18 Request Reset Password - Non-existent (Invalid path)",
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "type": "text/javascript",
+                "exec": [
+                  "pm.test('TC-POST-18: Status is not 200', function () {",
+                  "    pm.response.to.not.have.status(200);",
+                  "});"
+                ]
+              }
+            }
+          ],
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": "{{baseUrl}}/auth/request-reset-password?identifier=no_such_user_xyzabc"
+          }
+        },
+        {
+          "name": "TC-POST-19 Reset Password - Invalid token (Invalid path)",
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "type": "text/javascript",
+                "exec": [
+                  "pm.test('TC-POST-19: Status is not 200 for invalid token', function () {",
+                  "    pm.response.to.not.have.status(200);",
+                  "});"
+                ]
+              }
+            }
+          ],
+          "request": {
+            "method": "PUT",
+            "header": [{ "key": "Content-Type", "value": "application/json" }],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n    \"token\": \"this-is-an-invalid-token\",\n    \"newPassword\": \"NewPass@123\"\n}"
+            },
+            "url": "{{baseUrl}}/auth/reset-password"
+          }
+        },
+        {
+          "name": "TC-POST-20 Reset Password - Empty token (Edge case)",
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "type": "text/javascript",
+                "exec": [
+                  "pm.test('TC-POST-20: Status is 400 for empty token', function () {",
+                  "    pm.response.to.have.status(400);",
+                  "});"
+                ]
+              }
+            }
+          ],
+          "request": {
+            "method": "PUT",
+            "header": [{ "key": "Content-Type", "value": "application/json" }],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n    \"token\": \"\",\n    \"newPassword\": \"NewPass@123\"\n}"
+            },
+            "url": "{{baseUrl}}/auth/reset-password"
+          }
+        }
+      ]
+    }
+  ]
+}

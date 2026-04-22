@@ -1,0 +1,629 @@
+{
+	"id": "9a493797-3c5e-472a-9a0d-6efa6d174fe1",
+	"name": "CVConnect - Auth API Test (Phan Anh)",
+	"timestamp": "2026-04-22T04:08:03.870Z",
+	"collection_id": "54213421-aab11a6f-00af-4038-8c85-bf1c4099a60f",
+	"folder_id": 0,
+	"environment_id": "0",
+	"totalPass": 22,
+	"delay": 0,
+	"persist": true,
+	"status": "finished",
+	"startedAt": "2026-04-22T04:08:01.497Z",
+	"totalFail": 0,
+	"results": [
+		{
+			"id": "9090cbc0-c782-4ebc-acc8-0e97d519e1ca",
+			"name": "TC-POST-09 Register - Valid data (Happy path + CheckDB)",
+			"url": "http://localhost:8080/user/auth/register-candidate",
+			"time": 136,
+			"responseCode": {
+				"code": 200,
+				"name": "OK"
+			},
+			"tests": {
+				"TC-POST-09: Status is 200": true
+			},
+			"testPassFailCounts": {
+				"TC-POST-09: Status is 200": {
+					"pass": 1,
+					"fail": 0
+				}
+			},
+			"times": [
+				136
+			],
+			"allTests": [
+				{
+					"TC-POST-09: Status is 200": true
+				}
+			]
+		},
+		{
+			"id": "8c1bf38a-b2c9-4479-99aa-1990034e5766",
+			"name": "TC-POST-10 Register - Duplicate username (Invalid path)",
+			"url": "http://localhost:8080/user/auth/register-candidate",
+			"time": 13,
+			"responseCode": {
+				"code": 400,
+				"name": "Bad Request"
+			},
+			"tests": {
+				"TC-POST-10: Status is not 200 for duplicate": true
+			},
+			"testPassFailCounts": {
+				"TC-POST-10: Status is not 200 for duplicate": {
+					"pass": 1,
+					"fail": 0
+				}
+			},
+			"times": [
+				13
+			],
+			"allTests": [
+				{
+					"TC-POST-10: Status is not 200 for duplicate": true
+				}
+			]
+		},
+		{
+			"id": "736cd215-1359-46d8-a8b0-ea82cf70f110",
+			"name": "TC-POST-11 Register - Invalid email format (Edge case)",
+			"url": "http://localhost:8080/user/auth/register-candidate",
+			"time": 9,
+			"responseCode": {
+				"code": 400,
+				"name": "Bad Request"
+			},
+			"tests": {
+				"TC-POST-11: Status is 400 for invalid email": true
+			},
+			"testPassFailCounts": {
+				"TC-POST-11: Status is 400 for invalid email": {
+					"pass": 1,
+					"fail": 0
+				}
+			},
+			"times": [
+				9
+			],
+			"allTests": [
+				{
+					"TC-POST-11: Status is 400 for invalid email": true
+				}
+			]
+		},
+		{
+			"id": "413f43ac-e12e-4a85-ba6b-5dd3978318d3",
+			"name": "TC-POST-12 Register - Empty fullName (Edge case)",
+			"url": "http://localhost:8080/user/auth/register-candidate",
+			"time": 11,
+			"responseCode": {
+				"code": 400,
+				"name": "Bad Request"
+			},
+			"tests": {
+				"TC-POST-12: Status is 400 for empty fullName": true
+			},
+			"testPassFailCounts": {
+				"TC-POST-12: Status is 400 for empty fullName": {
+					"pass": 1,
+					"fail": 0
+				}
+			},
+			"times": [
+				11
+			],
+			"allTests": [
+				{
+					"TC-POST-12: Status is 400 for empty fullName": true
+				}
+			]
+		},
+		{
+			"id": "a832c692-a543-40a8-94ac-67e2fc6352d0",
+			"name": "TC-POST-01 Login - Valid credentials (Happy path)",
+			"url": "http://localhost:8080/user/auth/login",
+			"time": 161,
+			"responseCode": {
+				"code": 200,
+				"name": "OK"
+			},
+			"tests": {
+				"TC-POST-01: Status is 200": true,
+				"TC-POST-01: Response has token": true
+			},
+			"testPassFailCounts": {
+				"TC-POST-01: Status is 200": {
+					"pass": 1,
+					"fail": 0
+				},
+				"TC-POST-01: Response has token": {
+					"pass": 1,
+					"fail": 0
+				}
+			},
+			"times": [
+				161
+			],
+			"allTests": [
+				{
+					"TC-POST-01: Status is 200": true,
+					"TC-POST-01: Response has token": true
+				}
+			]
+		},
+		{
+			"id": "20c9ccbf-7c0a-436c-ab35-41231da25a81",
+			"name": "TC-POST-02 Login - Wrong password (Invalid path)",
+			"url": "http://localhost:8080/user/auth/login",
+			"time": 107,
+			"responseCode": {
+				"code": 401,
+				"name": "Unauthorized"
+			},
+			"tests": {
+				"TC-POST-02: Status is not 200": true
+			},
+			"testPassFailCounts": {
+				"TC-POST-02: Status is not 200": {
+					"pass": 1,
+					"fail": 0
+				}
+			},
+			"times": [
+				107
+			],
+			"allTests": [
+				{
+					"TC-POST-02: Status is not 200": true
+				}
+			]
+		},
+		{
+			"id": "b6ccfd95-52aa-4e69-a597-6af804dea6f1",
+			"name": "TC-POST-03 Login - Non-existent username (Invalid path)",
+			"url": "http://localhost:8080/user/auth/login",
+			"time": 11,
+			"responseCode": {
+				"code": 401,
+				"name": "Unauthorized"
+			},
+			"tests": {
+				"TC-POST-03: Status is not 200": true
+			},
+			"testPassFailCounts": {
+				"TC-POST-03: Status is not 200": {
+					"pass": 1,
+					"fail": 0
+				}
+			},
+			"times": [
+				11
+			],
+			"allTests": [
+				{
+					"TC-POST-03: Status is not 200": true
+				}
+			]
+		},
+		{
+			"id": "f1aa3b31-0c7f-4d6f-a734-9d5c02b60986",
+			"name": "TC-POST-04 Login - Empty username (Edge case)",
+			"url": "http://localhost:8080/user/auth/login",
+			"time": 7,
+			"responseCode": {
+				"code": 400,
+				"name": "Bad Request"
+			},
+			"tests": {
+				"TC-POST-04: Status is 400": true
+			},
+			"testPassFailCounts": {
+				"TC-POST-04: Status is 400": {
+					"pass": 1,
+					"fail": 0
+				}
+			},
+			"times": [
+				7
+			],
+			"allTests": [
+				{
+					"TC-POST-04: Status is 400": true
+				}
+			]
+		},
+		{
+			"id": "bcfb2a65-377c-48ed-ab00-d64e98df590c",
+			"name": "TC-POST-05 Login - Empty password (Edge case)",
+			"url": "http://localhost:8080/user/auth/login",
+			"time": 7,
+			"responseCode": {
+				"code": 400,
+				"name": "Bad Request"
+			},
+			"tests": {
+				"TC-POST-05: Status is 400": true
+			},
+			"testPassFailCounts": {
+				"TC-POST-05: Status is 400": {
+					"pass": 1,
+					"fail": 0
+				}
+			},
+			"times": [
+				7
+			],
+			"allTests": [
+				{
+					"TC-POST-05: Status is 400": true
+				}
+			]
+		},
+		{
+			"id": "d60b88bf-7661-47b0-bc56-40d0675c7ede",
+			"name": "TC-POST-06 Verify Token - Valid token (Happy path)",
+			"url": "http://localhost:8080/user/auth/verify-token",
+			"time": 14,
+			"responseCode": {
+				"code": 200,
+				"name": "OK"
+			},
+			"tests": {
+				"TC-POST-06: Status is 200": true,
+				"TC-POST-06: isValid is true": true
+			},
+			"testPassFailCounts": {
+				"TC-POST-06: Status is 200": {
+					"pass": 1,
+					"fail": 0
+				},
+				"TC-POST-06: isValid is true": {
+					"pass": 1,
+					"fail": 0
+				}
+			},
+			"times": [
+				14
+			],
+			"allTests": [
+				{
+					"TC-POST-06: Status is 200": true,
+					"TC-POST-06: isValid is true": true
+				}
+			]
+		},
+		{
+			"id": "99e53244-580f-4af9-87c1-9495fbdbd27b",
+			"name": "TC-POST-07 Verify Token - No token (Invalid path)",
+			"url": "http://localhost:8080/user/auth/verify-token",
+			"time": 4,
+			"responseCode": {
+				"code": 200,
+				"name": "OK"
+			},
+			"tests": {
+				"TC-POST-07: Status is 200": true,
+				"TC-POST-07: isValid is false": true
+			},
+			"testPassFailCounts": {
+				"TC-POST-07: Status is 200": {
+					"pass": 1,
+					"fail": 0
+				},
+				"TC-POST-07: isValid is false": {
+					"pass": 1,
+					"fail": 0
+				}
+			},
+			"times": [
+				4
+			],
+			"allTests": [
+				{
+					"TC-POST-07: Status is 200": true,
+					"TC-POST-07: isValid is false": true
+				}
+			]
+		},
+		{
+			"id": "5879cb39-9585-49e9-8057-fb68509a098e",
+			"name": "TC-POST-08 Logout (Happy path)",
+			"url": "http://localhost:8080/user/auth/logout",
+			"time": 11,
+			"responseCode": {
+				"code": 200,
+				"name": "OK"
+			},
+			"tests": {
+				"TC-POST-08: Status is 200": true
+			},
+			"testPassFailCounts": {
+				"TC-POST-08: Status is 200": {
+					"pass": 1,
+					"fail": 0
+				}
+			},
+			"times": [
+				11
+			],
+			"allTests": [
+				{
+					"TC-POST-08: Status is 200": true
+				}
+			]
+		},
+		{
+			"id": "3b92f166-6f08-4a4b-8be6-27d21dfb478b",
+			"name": "TC-POST-14 Request Resend Verify Email - Valid (Happy path)",
+			"url": "http://localhost:8080/user/auth/request-resend-verify-email?identifier=sqa_2027@mailinator.com",
+			"time": 14,
+			"responseCode": {
+				"code": 200,
+				"name": "OK"
+			},
+			"tests": {
+				"TC-POST-14: Status is 200": true
+			},
+			"testPassFailCounts": {
+				"TC-POST-14: Status is 200": {
+					"pass": 1,
+					"fail": 0
+				}
+			},
+			"times": [
+				14
+			],
+			"allTests": [
+				{
+					"TC-POST-14: Status is 200": true
+				}
+			]
+		},
+		{
+			"id": "60912df4-245c-48f5-a631-2b2006bcb83a",
+			"name": "TC-POST-15 Request Resend Verify Email - Non-existent (Invalid path)",
+			"url": "http://localhost:8080/user/auth/request-resend-verify-email?identifier=does_not_exist@test.com",
+			"time": 11,
+			"responseCode": {
+				"code": 404,
+				"name": "Not Found"
+			},
+			"tests": {
+				"TC-POST-15: Status is not 200": true
+			},
+			"testPassFailCounts": {
+				"TC-POST-15: Status is not 200": {
+					"pass": 1,
+					"fail": 0
+				}
+			},
+			"times": [
+				11
+			],
+			"allTests": [
+				{
+					"TC-POST-15: Status is not 200": true
+				}
+			]
+		},
+		{
+			"id": "76170908-a4dc-4786-a7ee-35123b48dea0",
+			"name": "TC-POST-16 Verify Email - Invalid token (Invalid path)",
+			"url": "http://localhost:8080/user/auth/verify-email/invalid-token-xyz-99999",
+			"time": 12,
+			"responseCode": {
+				"code": 401,
+				"name": "Unauthorized"
+			},
+			"tests": {
+				"TC-POST-16: Status is not 200 for invalid token": true
+			},
+			"testPassFailCounts": {
+				"TC-POST-16: Status is not 200 for invalid token": {
+					"pass": 1,
+					"fail": 0
+				}
+			},
+			"times": [
+				12
+			],
+			"allTests": [
+				{
+					"TC-POST-16: Status is not 200 for invalid token": true
+				}
+			]
+		},
+		{
+			"id": "46a8fd32-abf5-4e36-937c-36bf38999ef9",
+			"name": "TC-POST-17 Request Reset Password - Valid (Happy path)",
+			"url": "http://localhost:8080/user/auth/request-reset-password?identifier=sqa_test_pananh@mailinator.com",
+			"time": 12,
+			"responseCode": {
+				"code": 200,
+				"name": "OK"
+			},
+			"tests": {
+				"TC-POST-17: Status is 200": true
+			},
+			"testPassFailCounts": {
+				"TC-POST-17: Status is 200": {
+					"pass": 1,
+					"fail": 0
+				}
+			},
+			"times": [
+				12
+			],
+			"allTests": [
+				{
+					"TC-POST-17: Status is 200": true
+				}
+			]
+		},
+		{
+			"id": "487f69f4-4e3b-4a96-b44f-466ec7eff603",
+			"name": "TC-POST-18 Request Reset Password - Non-existent (Invalid path)",
+			"url": "http://localhost:8080/user/auth/request-reset-password?identifier=no_such_user_xyzabc",
+			"time": 10,
+			"responseCode": {
+				"code": 404,
+				"name": "Not Found"
+			},
+			"tests": {
+				"TC-POST-18: Status is not 200": true
+			},
+			"testPassFailCounts": {
+				"TC-POST-18: Status is not 200": {
+					"pass": 1,
+					"fail": 0
+				}
+			},
+			"times": [
+				10
+			],
+			"allTests": [
+				{
+					"TC-POST-18: Status is not 200": true
+				}
+			]
+		},
+		{
+			"id": "58bbff1a-d8a8-4870-8cf4-0f1494989e34",
+			"name": "TC-POST-19 Reset Password - Invalid token (Invalid path)",
+			"url": "http://localhost:8080/user/auth/reset-password",
+			"time": 7,
+			"responseCode": {
+				"code": 401,
+				"name": "Unauthorized"
+			},
+			"tests": {
+				"TC-POST-19: Status is not 200 for invalid token": true
+			},
+			"testPassFailCounts": {
+				"TC-POST-19: Status is not 200 for invalid token": {
+					"pass": 1,
+					"fail": 0
+				}
+			},
+			"times": [
+				7
+			],
+			"allTests": [
+				{
+					"TC-POST-19: Status is not 200 for invalid token": true
+				}
+			]
+		},
+		{
+			"id": "df2c0c12-faba-4938-ad53-1756d86ed7d6",
+			"name": "TC-POST-20 Reset Password - Empty token (Edge case)",
+			"url": "http://localhost:8080/user/auth/reset-password",
+			"time": 6,
+			"responseCode": {
+				"code": 400,
+				"name": "Bad Request"
+			},
+			"tests": {
+				"TC-POST-20: Status is 400 for empty token": true
+			},
+			"testPassFailCounts": {
+				"TC-POST-20: Status is 400 for empty token": {
+					"pass": 1,
+					"fail": 0
+				}
+			},
+			"times": [
+				6
+			],
+			"allTests": [
+				{
+					"TC-POST-20: Status is 400 for empty token": true
+				}
+			]
+		}
+	],
+	"count": 1,
+	"totalTime": 563,
+	"collection": {
+		"requests": [
+			{
+				"id": "9090cbc0-c782-4ebc-acc8-0e97d519e1ca",
+				"method": "POST"
+			},
+			{
+				"id": "8c1bf38a-b2c9-4479-99aa-1990034e5766",
+				"method": "POST"
+			},
+			{
+				"id": "736cd215-1359-46d8-a8b0-ea82cf70f110",
+				"method": "POST"
+			},
+			{
+				"id": "413f43ac-e12e-4a85-ba6b-5dd3978318d3",
+				"method": "POST"
+			},
+			{
+				"id": "a832c692-a543-40a8-94ac-67e2fc6352d0",
+				"method": "POST"
+			},
+			{
+				"id": "20c9ccbf-7c0a-436c-ab35-41231da25a81",
+				"method": "POST"
+			},
+			{
+				"id": "b6ccfd95-52aa-4e69-a597-6af804dea6f1",
+				"method": "POST"
+			},
+			{
+				"id": "f1aa3b31-0c7f-4d6f-a734-9d5c02b60986",
+				"method": "POST"
+			},
+			{
+				"id": "bcfb2a65-377c-48ed-ab00-d64e98df590c",
+				"method": "POST"
+			},
+			{
+				"id": "d60b88bf-7661-47b0-bc56-40d0675c7ede",
+				"method": "POST"
+			},
+			{
+				"id": "99e53244-580f-4af9-87c1-9495fbdbd27b",
+				"method": "POST"
+			},
+			{
+				"id": "5879cb39-9585-49e9-8057-fb68509a098e",
+				"method": "POST"
+			},
+			{
+				"id": "3b92f166-6f08-4a4b-8be6-27d21dfb478b",
+				"method": "GET"
+			},
+			{
+				"id": "60912df4-245c-48f5-a631-2b2006bcb83a",
+				"method": "GET"
+			},
+			{
+				"id": "76170908-a4dc-4786-a7ee-35123b48dea0",
+				"method": "PUT"
+			},
+			{
+				"id": "46a8fd32-abf5-4e36-937c-36bf38999ef9",
+				"method": "GET"
+			},
+			{
+				"id": "487f69f4-4e3b-4a96-b44f-466ec7eff603",
+				"method": "GET"
+			},
+			{
+				"id": "58bbff1a-d8a8-4870-8cf4-0f1494989e34",
+				"method": "PUT"
+			},
+			{
+				"id": "df2c0c12-faba-4938-ad53-1756d86ed7d6",
+				"method": "PUT"
+			}
+		]
+	}
+}
