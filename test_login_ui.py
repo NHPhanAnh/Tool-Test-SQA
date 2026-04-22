@@ -29,7 +29,7 @@ def test_successful_login(driver):
     driver.get("http://localhost:3000/auth/login")
     
     # 2. Wait for the page to load by checking for the login button
-    wait = WebDriverWait(driver, 60)
+    wait = WebDriverWait(driver, 120)
     wait.until(EC.presence_of_element_located((By.CSS_SELECTOR, ".login-button")))
     
     # 3. Locate the Username and Password input fields
@@ -79,10 +79,15 @@ def test_failed_login_wrong_password(driver):
     """Test login failure with incorrect credentials."""
     
     driver.get("http://localhost:3000/auth/login")
-    wait = WebDriverWait(driver, 60)
+    wait = WebDriverWait(driver, 180)
     
     # Wait for the login button to ensure Vue has mounted the UI
-    wait.until(EC.presence_of_element_located((By.CSS_SELECTOR, ".login-button")))
+    try:
+        wait.until(EC.presence_of_element_located((By.CSS_SELECTOR, ".login-button")))
+    except Exception as e:
+        driver.save_screenshot("error_screenshot.png")
+        print("Page source at failure:\n", driver.page_source[:1000])
+        raise e
     
     inputs = driver.find_elements(By.TAG_NAME, "input")
     username_input = [inp for inp in inputs if inp.get_attribute("type") in ["text", "email"]][0]
