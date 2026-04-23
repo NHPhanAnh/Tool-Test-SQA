@@ -68,6 +68,26 @@ def test_successful_register(driver):
     is_success = "/auth/login" in current_url or len(driver.find_elements(By.CSS_SELECTOR, ".notice")) > 0
     
     assert is_success, "Registration failed, neither redirected to login nor showed success notice."
+    
+    # --- ROLLBACK (Teardown) ---
+    # Delete the generated test user from the database to clean up the environment
+    try:
+        import mysql.connector
+        conn = mysql.connector.connect(
+            host="localhost",
+            port=3307,
+            user="root",
+            password="123456789",
+            database="cvconnect-user-service"
+        )
+        cursor = conn.cursor()
+        cursor.execute("DELETE FROM user WHERE username = %s", (username,))
+        conn.commit()
+        cursor.close()
+        conn.close()
+        print(f"\\nRollback successful: Deleted test user {username} from database.")
+    except Exception as e:
+        print(f"\\nRollback failed: {e}")
 
 def test_failed_register_password_mismatch(driver):
     """Test registration failure when passwords do not match."""
